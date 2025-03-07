@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Errores</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 50px;
+        }
+        .container {
+            max-width: 400px;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        input {
+            width: 100%;
+            padding: 8px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            padding: 10px 15px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .result {
+            margin-top: 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Calculadora de Errores</h2>
+        <label for="valorReal">Valor Real:</label>
+        <input type="number" id="valorReal" step="any">
+        <label for="valorAproximado">Valor Aproximado:</label>
+        <input type="number" id="valorAproximado" step="any">
+        <button onclick="calcularErrores()">Calcular Errores</button>
+        <div class="result" id="resultado"></div>
+    </div>
+
+    <script>
+        function calcularErrores() {
+            let vr = parseFloat(document.getElementById("valorReal").value);
+            let va = parseFloat(document.getElementById("valorAproximado").value);
+            
+            if (isNaN(vr) || isNaN(va)) {
+                document.getElementById("resultado").innerHTML = "Por favor, ingresa valores válidos.";
+                return;
+            }
+
+            // Cálculo del error absoluto: |Valor Real - Valor Aproximado|
+            let errorAbsoluto = Math.abs(vr - va);
+            
+            // Cálculo del error relativo: (Error Absoluto / |Valor Real|)
+            let errorRelativo = errorAbsoluto / Math.abs(vr);
+            
+            // Cálculo del error porcentual: Error Relativo * 100
+            let errorPorcentual = errorRelativo * 100;
+
+            // Mostrar los resultados con formato de 4 decimales para precisión numérica
+            document.getElementById("resultado").innerHTML = `
+                Error Absoluto: ${errorAbsoluto.toFixed(4)}<br>
+                Error Relativo: ${errorRelativo.toFixed(4)}<br>
+                Error Porcentual: ${errorPorcentual.toFixed(2)}%`;
+        }
+    </script>
+</body>
+</html>
